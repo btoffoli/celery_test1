@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  app:
+    image: celery_test1:latest
+    #container_name: celery_test1
+    build: 
+      # context: "./app"
+      context: .
+      dockerfile: Dockerfile.dev
+      args:
+        - USERNAME=${USER}
+        - PASSWORD=${USER}
+        - USER_UID=${UID}
+        - USER_GID=${UID}
+    container_name: celery_test1-container
+    # restart: allways
+    hostname: main
+    volumes: 
+      - ~/.git:/home/${USER}/.git
+      - ~/.ssh:/home/${USER}/.ssh:ro
+      - .:/home/${USER}/projeto:cached
+      # Se quiser persistir o histórico, antes de iniciar os containers,
+      # criar um arquivo .bash_history localmente (por exemplo: touch .bash_history )
+      # e descomente a próxima linha
+      - .bash_history:/home/${USER}/.bash_history
+    working_dir: /home/${USER}/projeto
+    environment: 
+      - PYTHONPATH=/usr/lib/python3/dist-packages
+

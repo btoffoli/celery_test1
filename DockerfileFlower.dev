@@ -1,0 +1,15 @@
+FROM python:3.9.2
+USER root
+# RUN apt update && \
+#     apt install -y -o Dpkg::Options::=--force-confdef \
+#     curl git unzip xz-utils zip wget less\
+#     bzip2 ssh python-pip
+RUN  apt update && \
+    apt install -y -o Dpkg::Options::=--force-confdef python3-pip
+ADD app /opt/app
+# VOLUME [ "/usr/local/lib/python3.9/site-packages" ]
+WORKDIR /opt/app
+RUN pip3 install -r requirements.txt
+CMD flower -A tasks1 --loglevel=DEBUG
+# CMD [ "sleep", "infinity" ]
+

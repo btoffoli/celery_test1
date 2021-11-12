@@ -1,0 +1,14 @@
+Docker and celery running test
+
+
+First you must to run rabbitmq server and then to link on dockers, such as command bellow:
+
+to run flower on Docker
+docker run -d -p 5555:5555  --rm --link some-rabbit:rabbitmq   --name flower-1.1.2-container  flower-1.1.2
+
+
+* to run celery workers command example, you can run N workers
+docker run -d --rm --link some-rabbit:rabbitmq   --name celery_worker-1.1.2-container2  celery_workwer-1.1.2
+
+
+TODO: write the docker-compose file, doing an unique dockerfile and put the command to run someting in each service
